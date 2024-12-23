@@ -10,6 +10,7 @@
 **/
 
 
-// START REPLACES //
+// VQMODDED START REPLACES //
+if (defined('DIR_CATALOG')) { $replaces[] = array('~^admin\b~', basename(DIR_APPLICATION)); }
 
 // END REPLACES //

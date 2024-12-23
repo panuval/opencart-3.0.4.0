@@ -600,7 +600,7 @@
 					$url .= '&limit=' . $this->request->get['limit'];
 				}
 
-				$author_info = $this->model_catalog_author->getAuthor($this->request->get['author_id']);
+                                $author_info = $this->model_catalog_author->getAuthor($this->request->get['author_id']);
 
 				if ($author_info) {
 					$data['breadcrumbs'][] = array(
@@ -681,17 +681,25 @@
 	
 	<file name="catalog/view/theme/*/template/product/product.twig">
         <operation>
-            <search position="after"><![CDATA[<li>{{ text_model }} {{ model }}</li>]]></search>
+            <search index="1" position="before" offset="1"><![CDATA[<div class="product-stats"]]></search>
             <add><![CDATA[
+			<div style="margin-bottom: 5px">
 			{% if (authors) %} 
 			{% set i = 0 %} 
-			<li>{{ text_author }} 
 				{% for author in authors %} 
 				{% set i = i + 1 %}
 				<a href="{{ author['href'] }}">{{ author['author_name'] }}</a>{% if (author['author_attribute_name']) %} {{ ' (' }}{% endif %}{{ author['author_attribute_name'] }}{% if (author['author_attribute_name']) %}{{ ')' }}{% endif %}{% if (i != loop.last) %}{{ ', ' }}{% endif %}
 				{% endfor %} <br />
-			</li>
 			{% endif %}
+			</div>
+			]]></add>
+        </operation>
+	</file>
+
+	<file name="catalog/view/theme/*/template/product/product.twig">
+        <operation>
+            <search position="before" offset="1"><![CDATA[<li class="product-stock]]></search>
+            <add><![CDATA[
 			{% if edition %}
 			  <li>{{ text_edition }} {{ edition }}</li>
 			{% endif %}
@@ -713,9 +721,9 @@
 			{% if book_language %}
 			  <li>{{ text_book_language }} {{ book_language }}</li>
 			{% endif %}
-			{% if date_published != '0000-00-00' %}
+			<!-- {% if date_published != '0000-00-00' and date_published != 'November 30, -0001' %}
 			  <li>{{ text_date_published }} {{ date_published }}</li>
-			{% endif %}
+			{% endif %} -->
 			]]></add>
         </operation>
 	</file>
