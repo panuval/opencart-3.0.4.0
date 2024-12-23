@@ -1,0 +1,139 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        {% if upgrade %}
+        <a onclick="$('#form-module').attr('action', '{{ upgrade }}');$('#form-upgrade').submit();" data-toggle="tooltip" data-placement="top" title="{{ text_upgrade }}" class="btn btn-warning"><i class="fa fa-gear"></i></a>
+		{% endif %}
+		<button type="submit" form="form-module" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-success"><i class="fa fa-save"></i></button>
+		<a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+	{% if upgrade %}
+    <div class="alert alert-danger">{{ text_upgrade_suggestion }}
+      <br>
+    </div>
+    {% endif %}
+	{% if upgrade_success %}
+    <div class="alert alert-success">
+      <i class="fa fa-check-circle"></i> {{ text_upgrade_success }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+      </div>
+      <div class="panel-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-module" class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
+              {% if error_name %}
+              <div class="text-danger">{{ error_name }}</div>
+              {% endif %}
+            </div>
+          </div>
+		  <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+            <div class="col-sm-10">
+              <select name="status" id="input-status" class="form-control">
+                {% if status %}
+                <option value="1" selected="selected">{{ text_enabled }}</option>
+                <option value="0">{{ text_disabled }}</option>
+                {% else %}
+                <option value="1">{{ text_enabled }}</option>
+                <option value="0" selected="selected">{{ text_disabled }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+		  <div class="form-group">
+			  <label class="col-sm-2 control-label" for="input-heading-title">{{ entry_heading_title }}</label>
+              <div class="col-sm-10">
+                {% for language in languages %}
+                  <div class="input-group">
+			        <span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /></span>
+                    <input type="text" name="author_title[{{ language.language_id }}]" value="{{ author_title[language.language_id] ? author_title[language.language_id] : '' }}" class="form-control" />
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+		  <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-type"><span data-toggle="tooltip" title="{{ help_type }}">{{ entry_type }}</span></label>
+            <div class="col-sm-10">
+              <select name="type" id="input-type" class="form-control">
+                <option value="author_list"{{ type == 'author_list' ? 'selected="selected"' : '' }} {{ type == '' ? 'selected="selected"' : '' }}>{{ text_list_dropdown }}</option>
+				<option value="more_product"{{ type == 'more_product' ? 'selected="selected"' : '' }}>{{ text_more_product }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group" id="input-display" style="display:none">
+            <label class="col-sm-2 control-label" for="input-display">{{ entry_display }}</label>
+			<div class="col-sm-10">
+              <select name="display" class="form-control">
+				<option value="display_list"{{ display == 'display_list' ? 'selected="selected"' : ''}}>{{ text_list }}</option>
+				<option value="display_dropdown"{{ display == 'display_dropdown' ? 'selected="selected"' : ''}}>{{ text_dropdown }}</option>
+			  </select>
+            </div>
+          </div>
+		  <div class="form-group" id="input-limit" style="display:none">
+            <label class="col-sm-2 control-label" for="input-limit">{{ entry_limit }}</label>
+              <div class="col-sm-10">
+                <input type="text" name="limit" value="{{ limit }}" placeholder="{{ entry_limit }}" id="input-limit" class="form-control" />
+              </div>
+          </div>
+		  <div class="form-group" id="input-width" style="display:none">
+            <label class="col-sm-2 control-label" for="input-width">{{ entry_width }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="width" value="{{ width }}" placeholder="{{ entry_width }}" id="input-width" class="form-control" />
+              {% if error_width %}
+              <div class="text-danger">{{ error_width }}</div>
+              {% endif %}
+            </div>
+          </div>
+		  <div class="form-group" id="input-height" style="display:none">
+            <label class="col-sm-2 control-label" for="input-height">{{ entry_height }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="height" value="{{ height }}" placeholder="{{ entry_height }}" id="input-height" class="form-control" />
+              {% if error_height %}
+              <div class="text-danger">{{ error_height }}</div>
+              {% endif %}
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript"><!--
+  $('#input-type').on('change',function() {
+	if ($(this).val() == "author_list"){
+	$("#input-display").show('300'),
+	$("#input-limit").hide('400'),
+	$("#input-width").hide('400'),
+	$("#input-height").hide('400')
+	} else {
+	$("#input-display").hide('200'),
+	$("#input-limit").show('400'),
+	$("#input-width").show('400'),
+	$("#input-height").show('400')
+	}
+  });
+  $('#input-type').trigger('change');
+//--></script> 
+{{ footer }}

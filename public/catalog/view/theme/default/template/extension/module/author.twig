@@ -1,0 +1,86 @@
+{% if (type == 'author_list') %}
+<!--author list/dropdown-->
+  <style type="text/css">
+  .ocbbox {margin-bottom:30px;}
+  .ocbbox .box-heading{padding:0 0 10px 0;font-size:18px;font-weight:bold;color:#222;
+  border-width:4px;border-style:solid;border-color:#B9B9B9;border-left:none;border-right:none;border-top:none;}
+  .ocbbox .box-heading span{padding:0 10px 8px 0;border-bottom:4px solid #2AA3D2;}
+  .ocbbox .box-content{margin-top:10px;margin-left:5px;margin-right:5px;}
+  </style>
+  {% if (display == 'display_list') %}
+    <!--author list-->
+    <div class="ocbbox">
+      <div class="box-heading"><span>{{ heading_title }}</span></div>
+      <div class="box-content">
+        {% if authors %}
+          <ul class="nav nav-tabs nav-stacked">
+            {% for author in authors %}
+              <li>
+                <a href="{{ author.href }}">{{ author.name }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+    </div>
+  {% else %}
+    <!--author dropdown-->
+    <div class="ocbbox">
+      <div class="box-heading"><span>{{ heading_title }}</span></div>
+      <div class="box-content">
+        {% if authors %}
+        <select class="form-control" onchange="location=this.options[this.selectedIndex].value;" >
+          <option value="">{{ text_select }}</option>
+          {% for author in authors %}
+          <option value="{{ author.href }}">{{ author.name }}</option>
+          {% endfor %}
+        </select>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+{% else %}
+<!--author more products-->
+  <h3>{{ heading_title }}</h3>
+  <div class="row">
+    {% for product in products %}
+    <div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12">
+      <div class="product-thumb transition">
+        <div class="image"><a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /></a></div>
+        <div class="caption">
+          <h4><a href="{{ product.href }}">{{ product.name }}</a></h4>
+          <p>{{ product.description }}</p>
+          {% if product.rating %}
+          <div class="rating">
+            {% for i in 1..5 %}
+            {% if product.rating < i %}
+            <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+            {% else %}
+            <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+            {% endif %}
+            {% endfor %}
+          </div>
+          {% endif %}
+          {% if product.price %}
+          <p class="price">
+            {% if not product.special %}
+            {{ product.price }}
+            {% else %}
+            <span class="price-new">{{ product.special }}</span> <span class="price-old">{{ product.price }}</span>
+            {% endif %}
+            {% if product.tax %}
+            <span class="price-tax">{{ text_tax }} {{ product.tax }}</span>
+            {% endif %}
+          </p>
+          {% endif %}
+        </div>
+        <div class="button-group">
+          <button type="button" onclick="cart.add('{{ product.product_id }}');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ button_cart }}</span></button>
+          <button type="button" data-toggle="tooltip" title="{{ button_wishlist }}" onclick="wishlist.add('{{ product.product_id }}');"><i class="fa fa-heart"></i></button>
+          <button type="button" data-toggle="tooltip" title="{{ button_compare }}" onclick="compare.add('{{ product.product_id }}');"><i class="fa fa-exchange"></i></button>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+{% endif %}
