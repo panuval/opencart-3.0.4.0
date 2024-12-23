@@ -2,7 +2,7 @@
 <modification>
     <id>VQMOD CORE FOR OPENCART - DO NOT REMOVE</id>
     <version>1.4.x and above</version>
-    <vqmver required="true">2.6.0</vqmver>
+    <vqmver required="true">2.6.7</vqmver>
     <author>vqmod.com</author>
 
     <file name="system/startup.php,system/engine/*.php,system/library/*.php,admin/controller/extension/*.php,system/library/template/*.php,catalog/controller/event/theme.php,system/library/template/Twig/*.php" error="skip">
@@ -44,6 +44,16 @@
             <search><![CDATA[is_file(DIR_MODIFICATION]]></search>
             <add trim="true" position="replace"><![CDATA[is_file('x' . DIR_MODIFICATION]]></add>
         </operation>		
-    </file>
-
+    
+		<operation error="skip" info="OpenCart 4.0 support">
+			<search position="after"><![CDATA[
+				$file = substr($file, strlen($this->root) + 1);
+			]]></search>
+			<add trim="true"><![CDATA[
+				$file = \VQMod::modCheck($file);
+				$file = str_replace(realpath(DIR_APPLICATION . '../'), '', $file);
+				$file = trim(str_replace('\\', '/', $file), '/ ');
+			]]></add>
+		</operation>
+	</file>
 </modification>
