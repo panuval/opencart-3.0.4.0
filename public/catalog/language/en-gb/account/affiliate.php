@@ -14,7 +14,7 @@ $_['text_success']              = 'Success: Your account has been successfully u
 $_['text_agree']                = 'I have read and agree to the <a href="%s" class="agree"><b>%s</b></a>';
 
 // Entry
-$_['entry_company']             = 'Company';
+$_['entry_company']             = 'Mobile Number';
 $_['entry_website']             = 'Web Site';
 $_['entry_tax']                 = 'Tax ID';
 $_['entry_payment']             = 'Payment Method';
