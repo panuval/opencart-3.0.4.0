@@ -30,6 +30,6 @@ public/system/storage/upload/*
 !public/system/storage/upload/index.html
 !public/system/storage/vendor/
 log/
-public/catalog/view/theme/journal3/assets/
-image/
+public/catalog/view/theme/journal3/assets/*
+!public/catalog/view/theme/journal3/assets/.gitkeep
 public/admin/view/stylesheet/bootstrap.css
