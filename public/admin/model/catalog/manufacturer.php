@@ -25,6 +25,12 @@ class ModelCatalogManufacturer extends Model {
 				}
 			}
 		}
+
+		if (isset($data['manufacturer_layout'])) {
+			foreach ($data['manufacturer_layout'] as $store_id => $layout_id) {
+				$this->db->query("INSERT INTO " . DB_PREFIX . "manufacturer_to_layout SET manufacturer_id = '" . (int)$manufacturer_id . "', store_id = '" . (int)$store_id . "', layout_id = '" . (int)$layout_id . "'");
+			}
+		}
 		
 		$this->cache->delete('manufacturer');
 
