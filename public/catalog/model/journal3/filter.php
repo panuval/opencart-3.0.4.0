@@ -989,7 +989,7 @@ class ModelJournal3Filter extends Model {
 				$words = explode(' ', trim(preg_replace('/\s\s+/', ' ', $filter_data['filter_name'])));
 
 				foreach ($words as $word) {
-					$implode[] = " pd.name LIKE '%" . $this->db->escape($word) . "%'";
+					$implode[] = " (pd.name LIKE '%" . $this->db->escape($word) . "%'". " OR " . "pd.english_name LIKE '%" . $this->db->escape($word) . "%')";
 				}
 
 				if ($implode) {

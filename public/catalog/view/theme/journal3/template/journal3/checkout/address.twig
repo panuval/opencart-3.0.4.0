@@ -9,7 +9,7 @@
 
     <div id="{{ type }}-existing" v-if="customer_id && ({{ type }}_address_type === 'existing')">
       <select v-model="order_data.{{ type }}_address_id" id="input-{{ type }}-address" class="form-control">
-        <option v-for="address in addresses" v-bind:value="address.address_id" v-html="address.firstname + ' ' + address.lastname + ' ' + address.address_1 + ' ' + address.city + ' ' + address.zone + ' ' + address.country"></option>
+        <option v-for="address in addresses" v-bind:value="address.address_id" v-html="address.firstname + ' ' + address.lastname + ' ' + address.company + ' ' + ' ' + address.address_1 + '  '+ address.address_2 + ' ' + address.city + ' ' + address.zone + ' ' + address.country"></option>
       </select>
       <span class="text-danger" v-if="error && error.{{ type }}_address_error" v-html="error.{{ type }}_address_error"></span>
     </div>

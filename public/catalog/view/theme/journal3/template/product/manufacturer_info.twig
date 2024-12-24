@@ -21,7 +21,11 @@
       {% if j3.settings.get('pageTitlePosition') == 'default' %}
         <h1 class="title page-title">{{ heading_title }}</h1>
       {% endif %}
+    <div class="category-description">
+      <div class="category-text">{{ description }}</div>
+    </div>
       {{ content_top }}
+      {% if m_layout_id == 0 %}
       <div class="main-products-wrapper">
       {% if products %}
         {% if j3.settings.get('sortBarStatus') %}
@@ -72,6 +76,7 @@
         <div class="buttons">
           <div class="pull-right"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
         </div>
+      {% endif %}
       {% endif %}
       </div>
       {{ content_bottom }}</div>

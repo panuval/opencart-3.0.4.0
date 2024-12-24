@@ -48,6 +48,9 @@ class ModelJournal3Layout extends Model {
 
 			if ($route == 'product/manufacturer/info' && isset($this->request->get['manufacturer_id'])) {
 				$manufacturer_id = $this->request->get['manufacturer_id'];
+				
+				$this->load->model('catalog/manufacturer');
+				$layout_id = $this->model_catalog_manufacturer->getManufacturerLayoutId($manufacturer_id);
 
 				$this->journal3->document->setPageId($manufacturer_id);
 
