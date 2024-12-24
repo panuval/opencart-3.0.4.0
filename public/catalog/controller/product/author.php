@@ -111,7 +111,11 @@ class ControllerProductAuthor extends Controller {
 		$author_info = $this->model_catalog_author->getAuthor($author_id);
 
 		if ($author_info) {
-			$this->document->setTitle($author_info['name']);
+			//$this->document->setTitle($author_info['name']);
+			$this->document->setTitle($author_info['meta_title']);
+			$this->document->setDescription($author_info['meta_description']);
+			$this->document->setKeywords($author_info['meta_keyword']);
+			
 			$this->document->addLink($this->url->link('product/author/info', 'author_id=' . $this->request->get['author_id']), 'canonical');
 
 			$url = '';

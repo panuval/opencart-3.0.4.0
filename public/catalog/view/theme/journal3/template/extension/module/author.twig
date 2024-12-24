@@ -1,0 +1,51 @@
+{% if (type == 'author_list') %}
+<!--author list/dropdown-->
+  <style type="text/css">
+  .ocbbox {margin-bottom:30px;}
+  .ocbbox .box-heading{padding:0 0 10px 0;font-size:18px;font-weight:bold;color:#222;
+  border-width:4px;border-style:solid;border-color:#B9B9B9;border-left:none;border-right:none;border-top:none;}
+  .ocbbox .box-heading span{padding:0 10px 8px 0;border-bottom:4px solid #2AA3D2;}
+  .ocbbox .box-content{margin-top:10px;margin-left:5px;margin-right:5px;}
+  </style>
+  {% if (display == 'display_list') %}
+    <!--author list-->
+    <div class="ocbbox">
+      <div class="box-heading"><span>{{ heading_title }}</span></div>
+      <div class="box-content">
+        {% if authors %}
+          <ul class="nav nav-tabs nav-stacked">
+            {% for author in authors %}
+              <li>
+                <a href="{{ author.href }}">{{ author.name }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+    </div>
+  {% else %}
+    <!--author dropdown-->
+    <div class="ocbbox">
+      <div class="box-heading"><span>{{ heading_title }}</span></div>
+      <div class="box-content">
+        {% if authors %}
+        <select class="form-control" onchange="location=this.options[this.selectedIndex].value;" >
+          <option value="">{{ text_select }}</option>
+          {% for author in authors %}
+          <option value="{{ author.href }}">{{ author.name }}</option>
+          {% endfor %}
+        </select>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+{% else %}
+<!--author more products-->
+  <h3>{{ heading_title }}</h3>
+  <div class="row">
+   <div class="main-products product-{{ j3.settings.get('globalProductView') }}">
+          {% set display = j3.settings.get('globalProductView') %}
+          {% include "journal3/template/journal3/product_card.twig" %}
+        </div>
+  </div>
+{% endif %}
